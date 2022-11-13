@@ -1,4 +1,4 @@
-import Button from "../../atoms/Button/Button";
+import Button from "../../atoms/Button/Button.js";
 
 // props jest to wbudowany obiekt w JS i sluzy do odbierania danych z komponentu, ktory go wywoluje (komponentu nadrzednego)
 function ChatMessages(props) {

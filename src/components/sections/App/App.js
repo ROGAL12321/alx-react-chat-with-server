@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import ChatMessages from '../../molecules/ChatMessages/ChatMessages';
-import MessagesForm from '../../molecules/MessagesForm/MessagesForm';
-import WelcomeMessage from '../../atoms/WelcomeMessage/WelcomeMessage';
-import Button from '../../atoms/Button/Button';
+import ChatMessages from '../../molecules/ChatMessages/ChatMessages.js';
+import MessagesForm from '../../molecules/MessagesForm/MessagesForm.js';
+import WelcomeMessage from '../../atoms/WelcomeMessage/WelcomeMessage.js';
+import Button from '../../atoms/Button/Button.js';
 
 import './App.css';
 
@@ -40,7 +40,7 @@ function App() {
       .then(data => {
         // data jest to JSON z serwera
         // console.log(data);
-        setMessages(data);
+        setMessages(data.messages);
       })
 
     // Odczytywanie z LS
@@ -70,6 +70,15 @@ function App() {
 
     // Zadanie na teraz:
     // 1. Przy uzyciu fetch i metody POST, wyslij dane na serwer
+
+    fetch('http://localhost:5000/messages', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(newMessage)
+    })
+
     // 2*. Przy uzyciu fetch i metody REMOVE usun pojedynczy message z jsona
 
 
@@ -98,7 +107,11 @@ function App() {
     })
 
     setMessages(messagesWithRemovedItem);
-    localStorage.setItem('messages', JSON.stringify(messagesWithRemovedItem));
+
+    fetch(`http://localhost:5000/messages/${idToRemove}`, {
+      method: 'DELETE'
+    })
+    // localStorage.setItem('messages', JSON.stringify(messagesWithRemovedItem));
   }
 
   const removeMessages = () => {
